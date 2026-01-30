@@ -118,6 +118,7 @@
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
     "mongoose": "^9.1.5",
     "morgan": "^1.10.1"
   },

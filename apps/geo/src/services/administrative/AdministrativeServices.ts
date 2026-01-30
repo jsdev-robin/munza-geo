@@ -3,8 +3,8 @@ import { Request, RequestHandler, Response } from 'express';
 import { gdamModel } from '../../models/gadm/gadmModel';
 
 export class AdministrativeServices {
-  static COUNTRY: RequestHandler = catchAsync(async (_req, res) => {
-    const countries = await gdamModel.aggregate([
+  static NAME_0: RequestHandler = catchAsync(async (_req, res) => {
+    const name_0 = await gdamModel.aggregate([
       {
         $group: {
           _id: '$properties.GID_0',
@@ -47,7 +47,8 @@ export class AdministrativeServices {
 
     res.status(200).json({
       status: Status.SUCCESS,
-      payload: { name_0: countries },
+      message: 'NAME_0 fetched successfully.',
+      payload: { name_0 },
     });
   });
 
