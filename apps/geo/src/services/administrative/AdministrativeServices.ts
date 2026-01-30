@@ -3,23 +3,53 @@ import { Request, RequestHandler, Response } from 'express';
 import { gdamModel } from '../../models/gadm/gadmModel';
 
 export class AdministrativeServices {
-  static COUNTRY: RequestHandler = catchAsync(
-    async (_req: Request, res: Response): Promise<void> => {
-      const countries = await gdamModel.aggregate([
-        { $group: { _id: '$properties.COUNTRY' } },
-        { $project: { _id: 0, name: '$_id' } },
-        { $sort: { name: 1 } },
-      ]);
-
-      res.status(HttpStatusCode.OK).json({
-        status: Status.SUCCESS,
-        message: 'Countries fetched successfully.',
-        payload: {
-          name_0: countries,
+  static COUNTRY: RequestHandler = catchAsync(async (_req, res) => {
+    const countries = await gdamModel.aggregate([
+      {
+        $group: {
+          _id: '$properties.GID_0',
+          name_0: { $first: '$properties.COUNTRY' },
+          name_1: { $first: '$properties.NAME_1' },
+          name_2: { $first: '$properties.NAME_2' },
+          name_3: { $first: '$properties.NAME_3' },
+          name_4: { $first: '$properties.NAME_4' },
+          name_5: { $first: '$properties.NAME_5' },
+          name_6: { $first: '$properties.NAME_6' },
         },
-      });
-    },
-  );
+      },
+      {
+        $addFields: {
+          level: {
+            $switch: {
+              branches: [
+                { case: { $ifNull: ['$name_6', false] }, then: 6 },
+                { case: { $ifNull: ['$name_5', false] }, then: 5 },
+                { case: { $ifNull: ['$name_4', false] }, then: 4 },
+                { case: { $ifNull: ['$name_3', false] }, then: 3 },
+                { case: { $ifNull: ['$name_2', false] }, then: 2 },
+                { case: { $ifNull: ['$name_1', false] }, then: 1 },
+              ],
+              default: 0,
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          gid: '$_id',
+          name: '$name_0',
+          level: 1,
+        },
+      },
+      { $sort: { name: 1 } },
+    ]);
+
+    res.status(200).json({
+      status: Status.SUCCESS,
+      payload: { name_0: countries },
+    });
+  });
 
   static NAME_1: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
