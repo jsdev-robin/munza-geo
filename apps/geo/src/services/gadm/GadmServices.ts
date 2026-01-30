@@ -9,7 +9,7 @@ export class GadmServices {
     async (_req: Request, res: Response): Promise<void> => {
       const filePath = path.join(
         process.cwd(),
-        'apps/geo/src/data/gadm41_DEU_4.json',
+        'apps/geo/src/data/gadm41_SWE_2.json',
       );
 
       const fileData = fs.readFileSync(filePath, 'utf-8');
