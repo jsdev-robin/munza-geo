@@ -50,6 +50,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Configure Cross-Origin Resource Sharing (CORS)
+app.use(cors());
 app.options('*', cors());
 
 // Get user device info
