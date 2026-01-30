@@ -16,7 +16,7 @@
           "format": [
             "cjs"
           ],
-          "bundle": false,
+          "bundle": true,
           "main": "apps/geo/src/main.ts",
           "tsConfig": "apps/geo/tsconfig.app.json",
           "assets": [
