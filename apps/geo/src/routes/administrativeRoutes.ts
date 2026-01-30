@@ -3,15 +3,12 @@ import { AdministrativeServices } from '../services/administrative/Administrativ
 
 const router: Router = express.Router();
 
-router.get('/countries', AdministrativeServices.findCountries);
-router.get('/division/:country', AdministrativeServices.findDivisionsByCountry);
-router.get(
-  '/district/:division',
-  AdministrativeServices.findDistrictByDivision,
-);
-router.get('/upazila/:district', AdministrativeServices.findUpazilaByDistrict);
-router.get('/union/:upazila', AdministrativeServices.findUnionByUpazila);
-router.get('/village/:union', AdministrativeServices.findVillagesByUnion);
-router.get('/hamlet/:village', AdministrativeServices.findVillagesByUnion);
+router.get('/countries', AdministrativeServices.COUNTRY);
+router.get('/name-1/:name_0', AdministrativeServices.NAME_1);
+router.get('/name-2/:name_1', AdministrativeServices.NAME_2);
+router.get('/name-3/:name_2', AdministrativeServices.NAME_3);
+router.get('/name-4/:name_3', AdministrativeServices.NAME_4);
+router.get('/name-5/:name_4', AdministrativeServices.NAME_5);
+router.get('/name-6/:name_5', AdministrativeServices.NAME_6);
 
 export default router;

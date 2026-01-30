@@ -61,8 +61,8 @@ app.get('/', async (req, res) => {
   });
 });
 
-app.use('/gadm', gadmRouter);
-app.use('/administrative', administrativeRouter);
+app.use('/api/v1/gadm', gadmRouter);
+app.use('/api/v1/administrative', administrativeRouter);
 
 // Handle 404 errors
 app.all(/(.*)/, (req: Request, res: Response, next: NextFunction) => {

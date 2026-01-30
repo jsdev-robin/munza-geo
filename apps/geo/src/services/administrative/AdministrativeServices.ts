@@ -3,7 +3,7 @@ import { Request, RequestHandler, Response } from 'express';
 import { gdamModel } from '../../models/gadm/gadmModel';
 
 export class AdministrativeServices {
-  static findCountries: RequestHandler = catchAsync(
+  static COUNTRY: RequestHandler = catchAsync(
     async (_req: Request, res: Response): Promise<void> => {
       const countries = await gdamModel.aggregate([
         { $group: { _id: '$properties.COUNTRY' } },
@@ -14,17 +14,19 @@ export class AdministrativeServices {
       res.status(HttpStatusCode.OK).json({
         status: Status.SUCCESS,
         message: 'Countries fetched successfully.',
-        payload: countries,
+        payload: {
+          name_0: countries,
+        },
       });
     },
   );
 
-  static findDivisionsByCountry: RequestHandler = catchAsync(
+  static NAME_1: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
-      const { country } = req.params;
+      const { name_0 } = req.params;
 
-      const divisions = await gdamModel.aggregate([
-        { $match: { 'properties.COUNTRY': country } },
+      const name_1 = await gdamModel.aggregate([
+        { $match: { 'properties.COUNTRY': name_0 } },
         {
           $group: {
             _id: '$properties.GID_1',
@@ -37,120 +39,98 @@ export class AdministrativeServices {
 
       res.status(HttpStatusCode.OK).json({
         status: Status.SUCCESS,
-        message: 'Divisions fetched successfully.',
-        payload: divisions,
+        message: 'NAME_1 fetched successfully.',
+        payload: {
+          name_1,
+        },
       });
     },
   );
 
-  static findDistrictByDivision: RequestHandler = catchAsync(
+  static NAME_2: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
-      const { division } = req.params;
+      const { name_1 } = req.params;
 
-      const districts = await gdamModel.aggregate([
-        {
-          $match: {
-            'properties.NAME_1': division,
-          },
-        },
+      const name_2 = await gdamModel.aggregate([
+        { $match: { 'properties.NAME_1': name_1 } },
         {
           $group: {
             _id: '$properties.GID_2',
             name: { $first: '$properties.NAME_2' },
           },
         },
-        {
-          $project: {
-            _id: 0,
-            gid: '$_id',
-            name: 1,
-          },
-        },
+        { $project: { _id: 0, gid: '$_id', name: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
         status: 'success',
-        message: 'Divisions fetched successfully.',
-        payload: districts,
+        message: 'NAME_2 fetched successfully.',
+        payload: {
+          name_2,
+        },
       });
     },
   );
 
-  static findUpazilaByDistrict: RequestHandler = catchAsync(
+  static NAME_3: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
-      const { district } = req.params;
+      const { name_2 } = req.params;
 
-      const upazila = await gdamModel.aggregate([
-        {
-          $match: {
-            'properties.NAME_2': district,
-          },
-        },
+      const name_3 = await gdamModel.aggregate([
+        { $match: { 'properties.NAME_2': name_2 } },
         {
           $group: {
             _id: '$properties.GID_3',
             name: { $first: '$properties.NAME_3' },
           },
         },
-        {
-          $project: {
-            _id: 0,
-            gid: '$_id',
-            name: 1,
-          },
-        },
+        { $project: { _id: 0, gid: '$_id', name: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
         status: 'success',
-        message: 'Upazila fetched successfully for the selected district.',
-        payload: upazila,
+        message: 'NAME_3 fetched successfully.',
+        payload: {
+          name_3,
+        },
       });
     },
   );
 
-  static findUnionByUpazila: RequestHandler = catchAsync(
+  static NAME_4: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
-      const { upazila } = req.params;
+      const { name_3 } = req.params;
 
-      const unions = await gdamModel.aggregate([
-        {
-          $match: {
-            'properties.NAME_3': upazila,
-          },
-        },
+      const name_4 = await gdamModel.aggregate([
+        { $match: { 'properties.NAME_3': name_3 } },
         {
           $group: {
             _id: '$properties.GID_4',
             name: { $first: '$properties.NAME_4' },
           },
         },
-        {
-          $project: {
-            _id: 0,
-            gid: '$_id',
-            name: 1,
-          },
-        },
+        { $project: { _id: 0, gid: '$_id', name: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
         status: 'success',
-        message: 'Unions fetched successfully for the selected sub-district.',
-        payload: unions,
+        message: 'NAME_4 fetched successfully.',
+        payload: {
+          name_4,
+        },
       });
     },
   );
 
-  static findVillagesByUnion: RequestHandler = catchAsync(
+  static NAME_5: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
-      const { union } = req.params;
+      const { name_4 } = req.params;
 
-      const villages = await gdamModel.aggregate([
-        { $match: { 'properties.NAME_4': union } },
+      const name_5 = await gdamModel.aggregate([
+        { $match: { 'properties.NAME_4': name_4 } },
         {
           $group: {
             _id: '$properties.GID_5',
@@ -163,18 +143,20 @@ export class AdministrativeServices {
 
       res.status(200).json({
         status: Status.SUCCESS,
-        message: 'Villages fetched successfully.',
-        payload: villages,
+        message: 'NAME_5 fetched successfully.',
+        payload: {
+          name_5,
+        },
       });
     },
   );
 
-  static findHamletsByVillage: RequestHandler = catchAsync(
+  static NAME_6: RequestHandler = catchAsync(
     async (req: Request, res: Response): Promise<void> => {
-      const { village } = req.params;
+      const { name_5 } = req.params;
 
-      const hamlets = await gdamModel.aggregate([
-        { $match: { 'properties.NAME_5': village } },
+      const name_6 = await gdamModel.aggregate([
+        { $match: { 'properties.NAME_5': name_5 } },
         {
           $group: {
             _id: '$properties.GID_6',
@@ -187,8 +169,10 @@ export class AdministrativeServices {
 
       res.status(200).json({
         status: Status.SUCCESS,
-        message: 'Hamlets fetched successfully.',
-        payload: hamlets,
+        message: 'NAME_6 fetched successfully.',
+        payload: {
+          name_6,
+        },
       });
     },
   );

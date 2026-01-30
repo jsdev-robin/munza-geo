@@ -1,30 +1,7 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { IGadm } from './types';
 
-export interface IUnionFeature extends Document {
-  type: 'Feature';
-  properties: {
-    GID_4: string;
-    GID_0: string;
-    COUNTRY: string;
-    GID_1: string;
-    NAME_1: string;
-    GID_2: string;
-    NAME_2: string;
-    GID_3: string;
-    NAME_3: string;
-    NAME_4: string;
-    VARNAME_4: string;
-    TYPE_4: string;
-    ENGTYPE_4: string;
-    CC_4: string;
-  };
-  geometry: {
-    type: 'MultiPolygon';
-    coordinates: number[][][][];
-  };
-}
-
-const GadmSchema = new Schema<IUnionFeature>(
+const GadmSchema = new Schema<IGadm>(
   {
     type: {
       type: String,
@@ -82,4 +59,4 @@ GadmSchema.index({ 'properties.GID_4': 1 });
 GadmSchema.index({ 'properties.NAME_4': 1 });
 GadmSchema.index({ 'properties.CC_4': 1 });
 
-export const gdamModel = model<IUnionFeature>('gadm', GadmSchema);
+export const gdamModel = model<IGadm>('gadm', GadmSchema);
