@@ -17,6 +17,8 @@ export interface IGadm extends Document {
     TYPE_4: string;
     ENGTYPE_4: string;
     CC_4: string;
+    GID_5: string;
+    NAME_5: string;
   };
   geometry: {
     type: 'MultiPolygon';

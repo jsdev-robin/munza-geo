@@ -23,6 +23,8 @@ const GadmSchema = new Schema<IGadm>(
       TYPE_4: { type: String },
       ENGTYPE_4: { type: String },
       CC_4: { type: String },
+      GID_5: { type: String },
+      NAME_5: { type: String },
     },
     geometry: {
       type: {
@@ -56,5 +58,9 @@ GadmSchema.index({ 'properties.NAME_3': 1 });
 GadmSchema.index({ 'properties.GID_4': 1 });
 GadmSchema.index({ 'properties.NAME_4': 1 });
 GadmSchema.index({ 'properties.CC_4': 1 });
+
+// Level 5
+GadmSchema.index({ 'properties.GID_5': 1 });
+GadmSchema.index({ 'properties.NAME_5': 1 });
 
 export const gdamModel = model<IGadm>('gadm', GadmSchema);
