@@ -9,7 +9,7 @@ A high-performance Node.js/TypeScript API designed to serve hierarchical geograp
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Hierarchy Levels](#-hierarchy-levels)
-- [API Endpoints](#-api-endpoints)
+- [API Endpoints Table](#-api-endpoints-table)
 - [Data Schema & Indexing](#-data-schema--indexing)
 - [Validation](#-validation)
 
@@ -50,38 +50,17 @@ The API follows a parent-name filtering logic. To fetch children, you must pass 
 
 ---
 
-## 🔗 API Endpoints
+## 🔗 API Endpoints Table
 
-### 1. Get All Countries
-
-`GET /api/administrative/name-0`
-Returns a list of all countries including their GID and the maximum administrative level depth supported.
-
-### 2. Get Divisions (Level 1)
-
-`GET /api/administrative/name-1/:name_0`
-
-- **Param:** `name_0` (The Country Name, e.g., `Bangladesh`)
-
-### 3. Get Districts (Level 2)
-
-`GET /api/administrative/name-2/:name_1`
-
-- **Param:** `name_1` (The Division Name, e.g., `Dhaka`)
-
-### 4. Get Upazilas (Level 3)
-
-`GET /api/administrative/name-3/:name_2`
-
-- **Param:** `name_2` (The District Name, e.g., `Manikganj`)
-
-### 5. Get Unions (Level 4)
-
-`GET /api/administrative/name-4/:name_3`
-
-- **Param:** `name_3` (The Upazila Name)
-
-> **Note:** Endpoints for Level 5 and Level 6 follow the same pattern (`/name-5/:name_4` and `/name-6/:name_5`).
+| Method  | Endpoint          | Required Parameter  | Description                            |
+| :------ | :---------------- | :------------------ | :------------------------------------- |
+| **GET** | `/name-0`         | None                | Lists all countries & their max depth. |
+| **GET** | `/name-1/:name_0` | `name_0` (Country)  | Fetches Divisions for a Country.       |
+| **GET** | `/name-2/:name_1` | `name_1` (Division) | Fetches Districts for a Division.      |
+| **GET** | `/name-3/:name_2` | `name_2` (District) | Fetches Upazilas for a District.       |
+| **GET** | `/name-4/:name_3` | `name_3` (Upazila)  | Fetches Unions for an Upazila.         |
+| **GET** | `/name-5/:name_4` | `name_4` (Union)    | Fetches Level 5 areas for a Union.     |
+| **GET** | `/name-6/:name_5` | `name_5` (Level 5)  | Fetches Level 6 areas.                 |
 
 ---
 
@@ -90,7 +69,7 @@ Returns a list of all countries including their GID and the maximum administrati
 The `gadm` collection is optimized for read-heavy operations. The following indexes are applied to ensure high-speed filtering:
 
 ```typescript
-// Example Indexes applied in Mongoose
+// Indexes applied in Mongoose for performance
 GadmSchema.index({ 'properties.NAME_1': 1 });
 GadmSchema.index({ 'properties.NAME_2': 1 });
 GadmSchema.index({ 'properties.NAME_3': 1 });
