@@ -39,27 +39,16 @@ const GadmSchema = new Schema<IGadm>(
   { timestamps: true },
 );
 
-// GEO
-// GadmSchema.index({ geometry: '2dsphere' });
-
-// Division
+GadmSchema.index({ geometry: '2dsphere' });
 GadmSchema.index({ 'properties.GID_1': 1 });
 GadmSchema.index({ 'properties.NAME_1': 1 });
-
-// District
 GadmSchema.index({ 'properties.GID_2': 1 });
 GadmSchema.index({ 'properties.NAME_2': 1 });
-
-// Upazila
 GadmSchema.index({ 'properties.GID_3': 1 });
 GadmSchema.index({ 'properties.NAME_3': 1 });
-
-// Union
 GadmSchema.index({ 'properties.GID_4': 1 });
 GadmSchema.index({ 'properties.NAME_4': 1 });
 GadmSchema.index({ 'properties.CC_4': 1 });
-
-// Level 5
 GadmSchema.index({ 'properties.GID_5': 1 });
 GadmSchema.index({ 'properties.NAME_5': 1 });
 

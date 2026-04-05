@@ -7,21 +7,25 @@ import { gdamModel } from '../../models/gadm/gadmModel';
 export class GadmServices {
   static createMany: RequestHandler = catchAsync(
     async (_req: Request, res: Response): Promise<void> => {
-      const filePath = path.join(
-        process.cwd(),
-        'apps/geo/src/data/gadm41_SWE_2.json',
-      );
+      const folderPath = path.join(process.cwd(), 'apps/geo/src/data');
+      const files = fs.readdirSync(folderPath);
 
-      const fileData = fs.readFileSync(filePath, 'utf-8');
-      const jsonData = JSON.parse(fileData);
+      for (const file of files) {
+        if (file.endsWith('.json')) {
+          const filePath = path.join(folderPath, file);
+          const fileData = fs.readFileSync(filePath, 'utf-8');
+          const jsonData = JSON.parse(fileData);
 
-      const features = jsonData.features;
-
-      await gdamModel.insertMany(features);
+          const features = jsonData.features;
+          if (Array.isArray(features) && features.length > 0) {
+            await gdamModel.insertMany(features);
+          }
+        }
+      }
 
       res.status(HttpStatusCode.CREATED).json({
         status: Status.SUCCESS,
-        message: 'GADM data uploaded successfully',
+        message: 'All GADM JSON files uploaded successfully',
       });
     },
   );

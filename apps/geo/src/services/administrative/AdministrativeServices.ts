@@ -15,6 +15,7 @@ export class AdministrativeServices {
           name_4: { $first: '$properties.NAME_4' },
           name_5: { $first: '$properties.NAME_5' },
           name_6: { $first: '$properties.NAME_6' },
+          geometry: { $first: '$geometry' },
         },
       },
       {
@@ -40,6 +41,7 @@ export class AdministrativeServices {
           gid: '$_id',
           name: '$name_0',
           level: 1,
+          geometry: 1,
         },
       },
       { $sort: { name: 1 } },
@@ -53,7 +55,7 @@ export class AdministrativeServices {
   });
 
   static NAME_1: RequestHandler = catchAsync(
-    async (req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response) => {
       const { name_0 } = req.params;
 
       const name_1 = await gdamModel.aggregate([
@@ -62,24 +64,23 @@ export class AdministrativeServices {
           $group: {
             _id: '$properties.GID_1',
             name: { $first: '$properties.NAME_1' },
+            geometry: { $first: '$geometry' },
           },
         },
-        { $project: { _id: 0, gid: '$_id', name: 1 } },
+        { $project: { _id: 0, gid: '$_id', name: 1, geometry: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(HttpStatusCode.OK).json({
         status: Status.SUCCESS,
         message: 'NAME_1 fetched successfully.',
-        payload: {
-          name_1,
-        },
+        payload: { name_1 },
       });
     },
   );
 
   static NAME_2: RequestHandler = catchAsync(
-    async (req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response) => {
       const { name_1 } = req.params;
 
       const name_2 = await gdamModel.aggregate([
@@ -88,24 +89,23 @@ export class AdministrativeServices {
           $group: {
             _id: '$properties.GID_2',
             name: { $first: '$properties.NAME_2' },
+            geometry: { $first: '$geometry' },
           },
         },
-        { $project: { _id: 0, gid: '$_id', name: 1 } },
+        { $project: { _id: 0, gid: '$_id', name: 1, geometry: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
-        status: 'success',
+        status: Status.SUCCESS,
         message: 'NAME_2 fetched successfully.',
-        payload: {
-          name_2,
-        },
+        payload: { name_2 },
       });
     },
   );
 
   static NAME_3: RequestHandler = catchAsync(
-    async (req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response) => {
       const { name_2 } = req.params;
 
       const name_3 = await gdamModel.aggregate([
@@ -114,24 +114,23 @@ export class AdministrativeServices {
           $group: {
             _id: '$properties.GID_3',
             name: { $first: '$properties.NAME_3' },
+            geometry: { $first: '$geometry' },
           },
         },
-        { $project: { _id: 0, gid: '$_id', name: 1 } },
+        { $project: { _id: 0, gid: '$_id', name: 1, geometry: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
-        status: 'success',
+        status: Status.SUCCESS,
         message: 'NAME_3 fetched successfully.',
-        payload: {
-          name_3,
-        },
+        payload: { name_3 },
       });
     },
   );
 
   static NAME_4: RequestHandler = catchAsync(
-    async (req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response) => {
       const { name_3 } = req.params;
 
       const name_4 = await gdamModel.aggregate([
@@ -140,24 +139,23 @@ export class AdministrativeServices {
           $group: {
             _id: '$properties.GID_4',
             name: { $first: '$properties.NAME_4' },
+            geometry: { $first: '$geometry' },
           },
         },
-        { $project: { _id: 0, gid: '$_id', name: 1 } },
+        { $project: { _id: 0, gid: '$_id', name: 1, geometry: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
-        status: 'success',
+        status: Status.SUCCESS,
         message: 'NAME_4 fetched successfully.',
-        payload: {
-          name_4,
-        },
+        payload: { name_4 },
       });
     },
   );
 
   static NAME_5: RequestHandler = catchAsync(
-    async (req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response) => {
       const { name_4 } = req.params;
 
       const name_5 = await gdamModel.aggregate([
@@ -166,24 +164,23 @@ export class AdministrativeServices {
           $group: {
             _id: '$properties.GID_5',
             name: { $first: '$properties.NAME_5' },
+            geometry: { $first: '$geometry' },
           },
         },
-        { $project: { _id: 0, gid: '$_id', name: 1 } },
+        { $project: { _id: 0, gid: '$_id', name: 1, geometry: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
         status: Status.SUCCESS,
         message: 'NAME_5 fetched successfully.',
-        payload: {
-          name_5,
-        },
+        payload: { name_5 },
       });
     },
   );
 
   static NAME_6: RequestHandler = catchAsync(
-    async (req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response) => {
       const { name_5 } = req.params;
 
       const name_6 = await gdamModel.aggregate([
@@ -192,18 +189,17 @@ export class AdministrativeServices {
           $group: {
             _id: '$properties.GID_6',
             name: { $first: '$properties.NAME_6' },
+            geometry: { $first: '$geometry' },
           },
         },
-        { $project: { _id: 0, gid: '$_id', name: 1 } },
+        { $project: { _id: 0, gid: '$_id', name: 1, geometry: 1 } },
         { $sort: { name: 1 } },
       ]);
 
       res.status(200).json({
         status: Status.SUCCESS,
         message: 'NAME_6 fetched successfully.',
-        payload: {
-          name_6,
-        },
+        payload: { name_6 },
       });
     },
   );

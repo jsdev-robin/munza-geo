@@ -112,6 +112,7 @@
   "dependencies": {
     "@server/middlewares": "workspace:*",
     "@server/utils": "workspace:*",
+    "@turf/clean-coords": "^7.3.3",
     "body-parser": "^2.2.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",

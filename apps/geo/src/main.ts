@@ -1,7 +1,10 @@
 import http from 'http';
+import dns from 'node:dns/promises';
 import app from './app';
 import { config } from './configs/configs';
 import { initializeMongoDB } from './configs/initializeConnection';
+
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 const httpServer = http.createServer(app);
 
